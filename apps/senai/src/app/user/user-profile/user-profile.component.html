@@ -1,0 +1,150 @@
+<form [formGroup]="registrationForm" class="p-fluid">
+  <p-panel header="Informações Pessoais">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6">
+        <app-form-field label="Nome Completo" [required]="true">
+          <input pInputText id="fullName" formControlName="fullName" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <app-form-field label="Data de Nascimento" [required]="true">
+          <p-calendar formControlName="birthDate" dateFormat="dd/mm/yy"></p-calendar>
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="CPF" [required]="true">
+          <!-- <p-inputMask formControlName="cpf" mask="999.999.999-99"></p-inputMask> -->
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="E-mail" [required]="true">
+          <input pInputText id="email" formControlName="email" type="email" />
+        </app-form-field>
+      </div>
+      <!-- <div class="p-col-12 p-md-4">
+        <app-form-field label="Celular" [required]="true">
+          <p-inputMask formControlName="cellPhone" mask="(99) 99999-9999"></p-inputMask>
+        </app-form-field>
+      </div> -->
+      <!-- <div class="p-col-12 p-md-4">
+        <app-form-field label="Telefone">
+          <p-inputMask formControlName="phone" mask="(99) 9999-9999"></p-inputMask>
+        </app-form-field>
+      </div> -->
+      <!-- <div class="p-col-12 p-md-4">
+        <app-form-field label="Nacionalidade" [required]="true">
+          <input pInputText id="nationality" formControlName="nationality" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Naturalidade" [required]="true">
+          <input pInputText id="birthPlace" formControlName="birthPlace" />
+        </app-form-field>
+      </div> -->
+    </div>
+  </p-panel>
+
+  <p-panel header="Informações Familiares" styleClass="mt-3">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Nome da Mãe" [required]="true">
+          <input pInputText id="motherName" formControlName="motherName" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Nome do Pai">
+          <input pInputText id="fatherName" formControlName="fatherName" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Nome do Responsável Legal">
+          <input pInputText id="legalGuardianName" formControlName="legalGuardianName" />
+        </app-form-field>
+      </div>
+    </div>
+  </p-panel>
+
+  <p-panel header="Endereço" styleClass="mt-3">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-3">
+        <app-form-field label="CEP" [required]="true">
+          <!-- <p-inputMask formControlName="cep" mask="99999-999"></p-inputMask> -->
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <app-form-field label="Rua e número" [required]="true">
+          <input pInputText id="street" formControlName="street" />
+        </app-form-field>
+      </div>
+      <!-- <div class="p-col-12 p-md-3">
+        <app-form-field label="Número" [required]="true">
+          <input pInputText id="number" formControlName="number" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Bairro" [required]="true">
+          <input pInputText id="neighborhood" formControlName="neighborhood" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Município" [required]="true">
+          <input pInputText id="city" formControlName="city" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="UF" [required]="true">
+          <p-dropdown [options]="states" formControlName="state" placeholder="Selecione o estado"></p-dropdown>
+        </app-form-field>
+      </div> -->
+    </div>
+  </p-panel>
+
+  <p-panel header="Escolaridade" styleClass="mt-3">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Nível de Escolaridade" [required]="true">
+          <p-dropdown [options]="educationLevels" formControlName="educationLevel"
+            placeholder="Selecione o nível"></p-dropdown>
+        </app-form-field>
+      </div>
+      <!-- <div class="p-col-12 p-md-4">
+        <app-form-field label="Local de Escolaridade" [required]="true">
+          <input pInputText id="educationPlace" formControlName="educationPlace" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-4">
+        <app-form-field label="Concluído em" [required]="true">
+          <p-calendar formControlName="completionYear" view="year" dateFormat="yy"></p-calendar>
+        </app-form-field>
+      </div> -->
+    </div>
+  </p-panel>
+
+  <p-panel header="Informações Adicionais" styleClass="mt-3">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <app-form-field label="Possui alguma deficiência?">
+          <p-checkbox formControlName="hasDisability" binary="true"></p-checkbox>
+        </app-form-field>
+      </div>
+    </div>
+  </p-panel>
+
+  <p-panel header="Senha" styleClass="mt-3">
+    <div class="p-grid">
+      <div class="p-col-12 p-md-6">
+        <app-form-field label="Senha" [required]="true">
+          <input pInputText id="password" formControlName="password" type="password" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-6">
+        <app-form-field label="Confirmar Senha" [required]="true">
+          <input pInputText id="confirmPassword" formControlName="confirmPassword" type="password" />
+        </app-form-field>
+      </div>
+    </div>
+  </p-panel>
+</form>
+<div class="flex mt-2">
+  <button class="btn">Salvar alterações</button>
+</div>

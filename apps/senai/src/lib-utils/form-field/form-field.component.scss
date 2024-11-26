@@ -1,0 +1,30 @@
+.p-field {
+  margin-bottom: 1rem;
+}
+
+.p-field-inline {
+  display: flex;
+  align-items: center;
+}
+
+.p-field-inline label {
+  margin-right: 0.5rem;
+  min-width: 150px;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.required-asterisk {
+  color: #ec6d46;
+  margin-right: 0.25rem;
+}
+
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-dropdown,
+:host ::ng-deep .p-calendar,
+:host ::ng-deep .p-inputnumber {
+  width: 100%;
+}

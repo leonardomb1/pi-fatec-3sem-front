@@ -1,0 +1,29 @@
+.register-button{
+  @apply
+    bg-gray-300
+      rounded-md
+      w-24
+      h-10;
+}
+
+:host ::ng-deep .p-panel {
+  margin-bottom: 1rem;
+}
+
+:host ::ng-deep .p-panel .p-panel-header {
+  background-color: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-grid {
+  margin-top: 1rem;
+}
+
+:host ::ng-deep .p-checkbox {
+  margin-right: 0.5rem;
+}
+
+:host ::ng-deep .p-button {
+  width: 100%;
+}

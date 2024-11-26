@@ -1,0 +1,9 @@
+<div class="p-field" [ngClass]="{'p-field-inline': type === 'inline'}">
+  <label [for]="inputId" [ngClass]="{'required': required}">
+    <ng-container *ngIf="required">
+      <span class="required-asterisk">*</span>
+    </ng-container>
+    {{ label }}
+  </label>
+  <ng-content></ng-content>
+</div>
