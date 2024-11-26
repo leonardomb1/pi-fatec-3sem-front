@@ -1,0 +1,11 @@
+.btn {
+  @apply py-2 px-4 rounded;
+}
+
+.btn-outline {
+  @apply border border-gray-300 hover:bg-gray-100;
+}
+
+.text-primary {
+  @apply text-blue-600;
+}
