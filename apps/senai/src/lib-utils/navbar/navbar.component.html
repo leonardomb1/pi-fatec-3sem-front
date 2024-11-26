@@ -21,14 +21,15 @@
       </div>
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
         <div class="flex shrink-0 items-center">
-          <img class="h-8 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
-            alt="Your Company" />
+          <img class="h-8 w-auto" src="logo.png" />
         </div>
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             @for (item of buttonsNavigations; track item.label) {
-            <a class="button-navigation text-button-navigation" [ngClass]="item.active ? 'rounded-md bg-red-900' : ''"
-              (click)="item.active = !item.active">{{ item.label }}</a>
+            <a class="button-navigation text-button-navigation" routerLinkActive="active"
+              (click)="item.active = !item.active" [routerLink]="item.route">
+              {{ item.label }}
+            </a>
             }
           </div>
         </div>
@@ -36,7 +37,7 @@
 
       <div class="relative ml-3">
         @if (isLogged()) {
-        <div>
+        <div class="menu">
           <button (click)="showUserMenu.set(!showUserMenu())"
             class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
@@ -49,14 +50,14 @@
         </div>
         } @else {
         <div class="flex gap-3">
-          <button type="button" class="">Cadastro</button>
-          <button type="button" class="">Login</button>
+          <button type="button" [routerLink]="['../user/create']">Cadastro</button>
+          <button type="button" [routerLink]="['../login']">Login</button>
         </div>
         }
-        <div [class.hidden]="showUserMenu()"
+        <div [class.hidden]="!showUserMenu()"
           class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-          <a class="button-user-menu">Perfil</a>
+          <a class="button-user-menu" [routerLink]="['../user/profile/${1}']">Perfil</a>
           <a class="button-user-menu"> Sair </a>
         </div>
       </div>

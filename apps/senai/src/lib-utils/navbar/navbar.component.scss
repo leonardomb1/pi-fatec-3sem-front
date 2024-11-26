@@ -18,3 +18,9 @@
   hover:text-gray-900
     cursor-pointer;
 }
+
+.active {
+  @apply
+    rounded-md
+    bg-red-900;
+}

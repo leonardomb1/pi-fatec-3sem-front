@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -15,22 +15,37 @@ export class NavbarComponent implements OnInit {
     {
       label: 'Home',
       active: true,
+      route: '/home',
     },
     {
       label: 'Cursos',
       active: false,
-    },
-    {
-      label: 'Sobre nós',
-      active: false,
-    },
-    {
-      label: 'Contato',
-      active: false,
+      route: '/courses',
     },
   ];
 
+
+  // {
+  //   label: 'Sobre nós',
+  //   active: false,
+  //   route: '',
+  // },
+  // {
+  //   label: 'Contato',
+  //   active: false,
+  //   route: '',
+  // },
+
   ngOnInit(): void {
     this.isLogged.set(this.loginService.isLogged.value);
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: MouseEvent) {
+    const clickedInside = event.target instanceof HTMLElement && !!event.target.closest('.menu');
+
+    if (!clickedInside) {
+      this.showUserMenu.set(false)
+    }
   }
 }
