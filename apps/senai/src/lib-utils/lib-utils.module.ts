@@ -4,11 +4,13 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { CarouselModule } from 'primeng/carousel';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { CourseCardComponent } from './course-card/course-card.component';
+import { FormFieldComponent } from './form-field/form-field.component';
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, CarouselComponent],
-  imports: [CommonModule, NgIf, NgFor, CarouselModule, BrowserAnimationsModule],
-  exports: [NavbarComponent, FooterComponent, CarouselComponent],
+  declarations: [NavbarComponent, FooterComponent, CarouselComponent, CourseCardComponent, FormFieldComponent],
+  imports: [CommonModule, NgIf, NgFor, CarouselModule, RouterModule],
+  exports: [NavbarComponent, FooterComponent, CarouselComponent, CourseCardComponent, FormFieldComponent],
 })
 export class LibUtilsModule {}

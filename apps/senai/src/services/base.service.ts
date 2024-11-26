@@ -1,15 +1,14 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { environment } from '../enviroments/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class BaseServiceService {
- private apiUrl = environment.apiUrl;
-
- constructor(private http: HttpClient) { }
+export class BaseService {
+ private apiUrl = new URL(`http://${environment.apiUrl}`);
+ private http = inject(HttpClient);
 
  private getHeaders() {
    return new HttpHeaders({

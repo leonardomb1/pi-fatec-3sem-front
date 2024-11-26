@@ -1,0 +1,6 @@
+<div class="carousel">
+  <img [src]="courses[currentIndex].photo" alt="Carousel Image" class="carousel-image cursor-pointer"
+    (click)="goToCourse(courses[currentIndex].id)">
+  <button class="carousel-button prev" (click)="prevSlide()">&lt;</button>
+  <button class="carousel-button next" (click)="nextSlide()">&gt;</button>
+</div>

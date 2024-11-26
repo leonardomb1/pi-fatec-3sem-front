@@ -1,0 +1,17 @@
+<div class="home-container">
+  <app-carousel [courses]="carouselCourses()"></app-carousel>
+
+  <section class="recommended-courses">
+    <h2>Cursos Recomendados</h2>
+    <div class="course-grid">
+      @for(course of coursesList(); track $index) {
+      <app-course-card [course]="course" routeTo="../courses/"></app-course-card>
+      }
+    </div>
+    @if (coursesList().length > 6) {
+    <div class="view-more-container">
+      <a [routerLink]="['../courses']" class="view-more-button">+</a>
+    </div>
+    }
+  </section>
+</div>

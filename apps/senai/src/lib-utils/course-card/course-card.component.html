@@ -1,0 +1,7 @@
+<div class="course-card" (click)="onCourseClick()">
+  <img [src]="course.photo" [alt]="course.nomeCurso" class="course-image">
+  <div class="course-content">
+    <h3>{{ course.nomeCurso }}</h3>
+    <p>{{ course.descCurso }}</p>
+  </div>
+</div>

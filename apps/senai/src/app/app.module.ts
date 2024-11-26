@@ -7,11 +7,21 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 import { LibUtilsModule } from '../lib-utils/lib-utils.module';
+import { HomeComponent } from './home/home.component';
+import { HttpClientModule } from '@angular/common/http';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [CommonModule, AppRoutingModule, BrowserModule, LibUtilsModule],
-  providers: [provideClientHydration()],
+  declarations: [AppComponent, HomeComponent],
+  imports: [
+    AppRoutingModule,
+    HttpClientModule,
+    BrowserModule,
+    LibUtilsModule,
+    BrowserAnimationsModule,
+  ],
+  providers: [provideClientHydration(), provideAnimationsAsync()],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
