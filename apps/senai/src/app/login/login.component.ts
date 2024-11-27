@@ -29,4 +29,8 @@ export class LoginComponent {
       relativeTo: this.activatedRoute
     });
   }
+
+  login(): void {
+
+  }
 }

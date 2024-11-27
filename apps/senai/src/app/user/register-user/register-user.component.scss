@@ -6,6 +6,11 @@
       h-10;
 }
 
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 :host ::ng-deep .p-panel {
   margin-bottom: 1rem;
 }
@@ -26,4 +31,20 @@
 
 :host ::ng-deep .p-button {
   width: 100%;
+}
+
+:host ::ng-deep {
+  .p-checkbox-box {
+    border-color: #007bff;
+    background-color: #e6f3fd;
+  }
+
+  .p-checkbox-box.p-highlight {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+
+  .p-checkbox-box .p-checkbox-icon {
+    color: white;
+  }
 }

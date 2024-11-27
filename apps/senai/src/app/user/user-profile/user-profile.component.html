@@ -1,19 +1,24 @@
-<form [formGroup]="registrationForm" class="p-fluid">
+<form [formGroup]="registrationForm" class="p-fluid pb-8 bg-gray-300">
   <p-panel header="Informações Pessoais">
     <div class="p-grid">
       <div class="p-col-12 p-md-6">
+        <app-form-field label="Nome de usuário" [required]="true">
+          <input pInputText id="nomeUsuario" formControlName="nomeUsuario" />
+        </app-form-field>
+      </div>
+      <div class="p-col-12 p-md-6">
         <app-form-field label="Nome Completo" [required]="true">
-          <input pInputText id="fullName" formControlName="fullName" />
+          <input pInputText id="nomePessoa" formControlName="nomePessoa" />
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-6">
         <app-form-field label="Data de Nascimento" [required]="true">
-          <p-calendar formControlName="birthDate" dateFormat="dd/mm/yy"></p-calendar>
+          <p-calendar [locale]="locale" formControlName="dtNascimento" dateFormat="dd/mm/yy"></p-calendar>
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-4">
         <app-form-field label="CPF" [required]="true">
-          <!-- <p-inputMask formControlName="cpf" mask="999.999.999-99"></p-inputMask> -->
+          <p-inputMask formControlName="cpf" mask="999.999.999-99"></p-inputMask>
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-4">
@@ -48,19 +53,21 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-4">
         <app-form-field label="Nome da Mãe" [required]="true">
-          <input pInputText id="motherName" formControlName="motherName" />
+          <input pInputText id="nomeMae" formControlName="nomeMae" />
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-4">
-        <app-form-field label="Nome do Pai">
-          <input pInputText id="fatherName" formControlName="fatherName" />
+        <app-form-field label="Nome do Pai" [required]="true">
+          <input pInputText id="nomePai" formControlName="nomePai" />
         </app-form-field>
       </div>
+      @if (!legalAge()) {
       <div class="p-col-12 p-md-4">
-        <app-form-field label="Nome do Responsável Legal">
-          <input pInputText id="legalGuardianName" formControlName="legalGuardianName" />
+        <app-form-field label="Nome do Responsável Legal" [required]="true">
+          <input pInputText id="nomeResponsavel" formControlName="nomeResponsavel" />
         </app-form-field>
       </div>
+      }
     </div>
   </p-panel>
 
@@ -68,12 +75,12 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-3">
         <app-form-field label="CEP" [required]="true">
-          <!-- <p-inputMask formControlName="cep" mask="99999-999"></p-inputMask> -->
+          <p-inputMask formControlName="cep" mask="99999-999"></p-inputMask>
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-6">
         <app-form-field label="Rua e número" [required]="true">
-          <input pInputText id="street" formControlName="street" />
+          <input pInputText id="endereco" formControlName="endereco" />
         </app-form-field>
       </div>
       <!-- <div class="p-col-12 p-md-3">
@@ -103,7 +110,7 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-4">
         <app-form-field label="Nível de Escolaridade" [required]="true">
-          <p-dropdown [options]="educationLevels" formControlName="educationLevel"
+          <p-dropdown [options]="nivelEscolaridades" formControlName="nivelEscolaridade"
             placeholder="Selecione o nível"></p-dropdown>
         </app-form-field>
       </div>
@@ -124,27 +131,25 @@
     <div class="p-grid">
       <div class="p-col-12">
         <app-form-field label="Possui alguma deficiência?">
-          <p-checkbox formControlName="hasDisability" binary="true"></p-checkbox>
+          <p-checkbox class="mb-2 ml-2 -mr-2" formControlName="pcd" binary="true"></p-checkbox>
         </app-form-field>
+        @if (registrationForm.get('pcd')?.value) {
+        <app-form-field label="Descrição da deficiência" [required]="true">
+          <input pInputText id="descricaoPcd" formControlName="descricaoPcd" />
+        </app-form-field>
+        }
       </div>
+    </div>
+
+
+    <div class="flex mt-4 items-center justify-center">
+      <a (click)="saveChanges()" [class.disabled]="registrationForm.invalid"
+        class="cursor-pointer inline-flex items-center justify-center w-full px-6 py-2 text-base font-bold leading-6 text-white bg-red-800 border border-transparent rounded-full md:w-auto hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
+        Cadastrar
+      </a>
     </div>
   </p-panel>
 
-  <p-panel header="Senha" styleClass="mt-3">
-    <div class="p-grid">
-      <div class="p-col-12 p-md-6">
-        <app-form-field label="Senha" [required]="true">
-          <input pInputText id="password" formControlName="password" type="password" />
-        </app-form-field>
-      </div>
-      <div class="p-col-12 p-md-6">
-        <app-form-field label="Confirmar Senha" [required]="true">
-          <input pInputText id="confirmPassword" formControlName="confirmPassword" type="password" />
-        </app-form-field>
-      </div>
-    </div>
-  </p-panel>
 </form>
-<div class="flex mt-2">
-  <button class="btn">Salvar alterações</button>
-</div>
+
+<p-toast></p-toast>

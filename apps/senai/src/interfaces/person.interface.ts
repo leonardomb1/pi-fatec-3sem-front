@@ -22,6 +22,10 @@ export interface IStudent {
   pcd: boolean,
   descricaoPcd: string,
   dtNascimento: Date,
+  nomeMae: string,
+  nomePai: string,
+  nomeResponsavel: string,
+  cep: string,
   dtCadastro: Date,
   dtAlteracao: Date
 }

@@ -11,28 +11,24 @@ export class NavbarComponent implements OnInit {
 
   isLogged = signal<boolean>(false);
   showUserMenu = signal<boolean>(false);
+  showButtonsMenu = signal<boolean>(false);
   buttonsNavigations = [
     {
       label: 'Home',
-      active: true,
       route: '/home',
     },
     {
       label: 'Cursos',
-      active: false,
       route: '/courses',
     },
   ];
 
-
   // {
   //   label: 'Sobre nós',
-  //   active: false,
   //   route: '',
   // },
   // {
   //   label: 'Contato',
-  //   active: false,
   //   route: '',
   // },
 

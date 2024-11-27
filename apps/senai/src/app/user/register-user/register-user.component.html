@@ -2,18 +2,18 @@
   <p-panel header="Informações Pessoais">
     <div class="p-grid">
       <div class="p-col-12 p-md-6">
-        <app-form-field label="Nome Completo" [required]="true">
-          <input pInputText id="userName" formControlName="fullName" />
+        <app-form-field label="Nome de usuário" [required]="true">
+          <input pInputText id="nomeUsuario" formControlName="nomeUsuario" />
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-6">
         <app-form-field label="Nome Completo" [required]="true">
-          <input pInputText id="fullName" formControlName="fullName" />
+          <input pInputText id="nomePessoa" formControlName="nomePessoa" />
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-6">
         <app-form-field label="Data de Nascimento" [required]="true">
-          <p-calendar formControlName="birthDate" dateFormat="dd/mm/yy"></p-calendar>
+          <p-calendar [locale]="locale" formControlName="dtNascimento" dateFormat="dd/mm/yy"></p-calendar>
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-4">
@@ -53,18 +53,18 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-4">
         <app-form-field label="Nome da Mãe" [required]="true">
-          <input pInputText id="motherName" formControlName="motherName" />
+          <input pInputText id="nomeMae" formControlName="nomeMae" />
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-4">
         <app-form-field label="Nome do Pai" [required]="true">
-          <input pInputText id="fatherName" formControlName="fatherName" />
+          <input pInputText id="nomePai" formControlName="nomePai" />
         </app-form-field>
       </div>
       @if (!legalAge()) {
       <div class="p-col-12 p-md-4">
         <app-form-field label="Nome do Responsável Legal" [required]="true">
-          <input pInputText id="legalGuardianName" formControlName="legalGuardianName" />
+          <input pInputText id="nomeResponsavel" formControlName="nomeResponsavel" />
         </app-form-field>
       </div>
       }
@@ -80,7 +80,7 @@
       </div>
       <div class="p-col-12 p-md-6">
         <app-form-field label="Rua e número" [required]="true">
-          <input pInputText id="street" formControlName="street" />
+          <input pInputText id="endereco" formControlName="endereco" />
         </app-form-field>
       </div>
       <!-- <div class="p-col-12 p-md-3">
@@ -110,7 +110,7 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-4">
         <app-form-field label="Nível de Escolaridade" [required]="true">
-          <p-dropdown [options]="educationLevels" formControlName="educationLevel"
+          <p-dropdown [options]="nivelEscolaridades" formControlName="nivelEscolaridade"
             placeholder="Selecione o nível"></p-dropdown>
         </app-form-field>
       </div>
@@ -131,8 +131,13 @@
     <div class="p-grid">
       <div class="p-col-12">
         <app-form-field label="Possui alguma deficiência?">
-          <p-checkbox class="mb-2 ml-2 -mr-2 bg-gray-300" formControlName="hasDisability" binary="true"></p-checkbox>
+          <p-checkbox class="mb-2 ml-2 -mr-2" formControlName="pcd" binary="true"></p-checkbox>
         </app-form-field>
+        @if (registrationForm.get('pcd')?.value) {
+        <app-form-field label="Descrição da deficiência" [required]="true">
+          <input pInputText id="descricaoPcd" formControlName="descricaoPcd" />
+        </app-form-field>
+        }
       </div>
     </div>
   </p-panel>
@@ -141,7 +146,7 @@
     <div class="p-grid">
       <div class="p-col-12 p-md-6">
         <app-form-field label="Senha" [required]="true">
-          <input pInputText id="password" formControlName="password" type="password" />
+          <input pInputText id="password" formControlName="senha" type="password" />
         </app-form-field>
       </div>
       <div class="p-col-12 p-md-6">
@@ -150,11 +155,9 @@
         </app-form-field>
       </div>
     </div>
-  </p-panel>
 
-  <p-panel styleClass="mt-3">
-    <div class="flex items-center gap-3">
-      <p-checkbox class="bg-gray-300" formControlName="agreeTerms" binary="true"></p-checkbox>
+    <div class="flex items-center gap-2">
+      <p-checkbox formControlName="agreeTerms" binary="true"></p-checkbox>
       <span>
         eu confirmo que li e concordo com os
         <a class="cursor-pointer text-cyan-700 underline">Termos de Uso</a>.
@@ -164,8 +167,8 @@
       </span>
     </div>
 
-    <div class="flex mt-3 items-center justify-center">
-      <a (click)="onSubmit()"
+    <div class="flex mt-4 items-center justify-center">
+      <a (click)="onSubmit()" [class.disabled]="registrationForm.invalid"
         class="cursor-pointer inline-flex items-center justify-center w-full px-6 py-2 text-base font-bold leading-6 text-white bg-red-800 border border-transparent rounded-full md:w-auto hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600">
         Cadastrar
       </a>
@@ -173,3 +176,5 @@
   </p-panel>
 
 </form>
+
+<p-toast></p-toast>

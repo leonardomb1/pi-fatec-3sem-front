@@ -1,6 +1,9 @@
+import { MessageService } from 'primeng/api';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from 'apps/senai/src/services/api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -8,57 +11,76 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrl: './register-user.component.scss'
 })
 export class RegisterUserComponent implements OnInit{
-  private destroyRef = inject(DestroyRef)
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+  private apiService = inject(ApiService);
+  private messageService = inject(MessageService);
 
   registrationForm = new FormGroup({
-    fullName: new FormControl('', [Validators.required]),
-    userName: new FormControl('', [Validators.required]),
-    birthDate: new FormControl(null as Date | null, [Validators.required]),
-    cpf: new FormControl('', [Validators.required, Validators.minLength(11), Validators.maxLength(11)]),
+    nomePessoa: new FormControl('', [Validators.required]),
+    nomeUsuario: new FormControl('', [Validators.required]),
+    dtNascimento: new FormControl(null as Date | null, [Validators.required]),
+    cpf: new FormControl('', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    motherName: new FormControl('', [Validators.required]),
-    fatherName: new FormControl('', [Validators.required]),
-    legalGuardianName: new FormControl(''),
+    nomeMae: new FormControl('', [Validators.required]),
+    nomePai: new FormControl('', [Validators.required]),
+    nomeResponsavel: new FormControl(''),
     cep: new FormControl('', [Validators.required]),
-    street: new FormControl('', [Validators.required]),
-    educationLevel: new FormControl('', [Validators.required]),
-    hasDisability: new FormControl(false),
+    endereco: new FormControl('', [Validators.required]),
+    nivelEscolaridade: new FormControl('', [Validators.required]),
+    pcd: new FormControl(false),
     descricaoPcd: new FormControl(''),
-    password: new FormControl('', Validators.required),
+    senha: new FormControl('', Validators.required),
     confirmPassword: new FormControl('', [Validators.required]),
-    agreeTerms: new FormControl(false, [Validators.requiredTrue])
+    agreeTerms: new FormControl(false, [Validators.requiredTrue]),
+    banco: new FormControl(''),
+    agencia: new FormControl(''),
+    candidato: new FormControl(true)
   });
 
   legalAge = signal(true)
 
   states: string[] = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
-  educationLevels: string[] = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-graduação', 'Mestrado', 'Doutorado'];
+  nivelEscolaridades: string[] = ['Ensino Fundamental', 'Ensino Médio', 'Ensino Superior', 'Pós-graduação', 'Mestrado', 'Doutorado'];
+  locale = {
+    firstDayOfWeek: 0,
+    dayNames: ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"],
+    dayNamesShort: ["dom", "seg", "ter", "qua", "qui", "sex", "sab"],
+    dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
+    monthNames: ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"],
+    monthNamesShort: ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"],
+    today: "Hoje",
+    clear: "Limpar"
+  };
 
   ngOnInit(): void {
     this.getBirthDateValue();
   }
 
   getBirthDateValue(): void {
-    this.registrationForm.get('birthDate')?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
+    this.registrationForm.get('dtNascimento')?.valueChanges.pipe(takeUntilDestroyed(this.destroyRef))
     .subscribe(value => {
       const today = new Date();
 
-      if (value &&
-        value.getDay() <= today.getDay() &&
-        value.getMonth() <= today.getMonth() &&
-        (value.getFullYear() - today.getFullYear() >= 18)
-      ) {
+      if (value && (today.getFullYear() - value!.getFullYear() >= 18)) {
         this.legalAge.set(true);
-        this.registrationForm.get('legalGuardianName')?.clearValidators();
+        this.registrationForm.get('nomeResponsavel')?.clearValidators();
       } else {
         this.legalAge.set(false);
-        this.registrationForm.get('legalGuardianName')?.setValidators([Validators.required]);
+        this.registrationForm.get('nomeResponsavel')?.setValidators([Validators.required]);
       }
     })
   }
 
-  getHasDisability(): void {
-    this.registrationForm
+  getPcd(): void {
+    this.registrationForm.get('pcd')?.valueChanges.
+    pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
+      if (value) {
+        this.registrationForm.get('descricaoPcd')?.setValidators([Validators.required]);
+      } else {
+        this.registrationForm.get('descricaoPcd')?.clearValidators();
+      }
+    })
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -67,15 +89,34 @@ export class RegisterUserComponent implements OnInit{
   }
 
   onSubmit() {
+    console.log(this.registrationForm);
     if (this.registrationForm.valid) {
-      console.log(this.registrationForm.value);
-      // Here you would typically send the form data to your backend
-    } else {
-      // Mark all fields as touched to trigger validation messages
-      Object.keys(this.registrationForm.controls).forEach(key => {
-        const control = this.registrationForm.get(key);
-        control?.markAsTouched();
-      });
+      const data = {
+        ...this.registrationForm.value,
+        usuario: {
+          ...this.registrationForm.value
+        }
+      }
+
+      this.apiService.personService.create(data)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Cadastro realizado com sucesso'
+          });
+          this.router.navigate(['../../login']);
+        },
+        error: (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: error.message
+          })
+        }
+      })
     }
   }
 }
